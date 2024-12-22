@@ -5,34 +5,40 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class UI_Jenkins {
+    @Parameters ("Browser")
+	@Test
+	public void Tc_001(String browserName) {
+    	
+    	WebDriver d=null;
+    	
+    	if(browserName.contains("Chrome")) {
+    		WebDriverManager.chromedriver().setup();
+    		d =new ChromeDriver(); 
+    	}
+    	else if(browserName.contains("Edge")) {
+    		WebDriverManager.edgedriver().setup(); 
+    		d =new EdgeDriver();
+    	}
 
-    @Test
-    public void Tc_001() throws InterruptedException {
+		
 
-        // Set up WebDriverManager to automatically manage the chromedriver
-       WebDriverManager.chromedriver().setup();
-        
-        // Optional: Set ChromeOptions to make it headless or configure other settings
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized"); // Optional: to start the browser maximized
-        
-        // Initialize the WebDriver (ChromeDriver) with the ChromeOptions
-        WebDriver d = new ChromeDriver(options);
-        
-        // Navigate to Amazon
-        d.get("https://www.facebook.com/");
-        
- 
-        d.findElement(By.id("email")).sendKeys("laptops");
-    
-        
-        // Optionally, wait for some time to observe the result
-        Thread.sleep(5000);
-        
-        // Close the browser
-        d.quit();
-    }
+
+		d.get("https://www.facebook.com/");
+
+
+		d.findElement(By.id("email")).sendKeys("laptops");
+
+
+		
+
+
+
+
+		d.quit();
+	}
 }
